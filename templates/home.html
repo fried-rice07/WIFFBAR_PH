@@ -1,0 +1,273 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<style>
+    .flex-container {
+        display: flex;
+        flex-direction: row;
+        font-size: 20px;
+    }
+    .item-left h1{
+        font-size: 40px;
+    }
+    .item-left {
+        padding: 20px;
+        flex: 50%;
+    }
+    .item-right img {
+        height: auto;
+        padding: 70px;
+        flex: 50%;
+        width: 100%;
+        max-width: 100%;
+    }
+    @media (max-width: 800px) {
+    .flex-container {
+        flex-direction: column;
+
+    }
+    .item-right{
+        display: flex;
+        padding:10px;
+        margin-top: -50px;
+        margin-bottom: 50px;
+
+    }
+    }
+    @media (max-width: 1000px) {
+    .flex-container {
+        flex-direction: column;
+
+    }
+    .item-right{
+        width: 100%;
+
+    }
+    }
+</style>
+<div class="">
+    <div class="col-2">
+        <center>    
+            <p style="margin-bottom: -20px ;">Home</p>
+        </center>
+        <img class="banner" src="{% static 'images/banner-new.png' %}" width="100%" height='auto' >
+    </div>
+</div>
+</div>
+<!--Categories-->
+<div class="flex-container">
+    <div class="item-left">
+        <h1>NEW PRODUCTS </h1>
+        <br>
+        <h1 style="color: red;">NOW AVAILABLE!!</h1>
+        <div class="col-3">
+            <img src="{% static 'images/product1.jpg' %}" alt="">
+            <a href="#" style="color: black;" class="text-link">Wiffbar Flavored Menthol Plus</a>
+            <div class="price">
+                <p><b>₱259</b></p>
+                <p style="text-decoration: line-through;">₱259</p>
+                <button>ADD TO <br>CART</button>
+            </div>
+        </div>
+        <div class="col-3">
+            <img src="{% static 'images/product 2.jpg' %}" alt="">
+            <a href="#" style="color: black;"class="text-link">Wiffbar Watermelon Iced</a>
+            <div class="price">
+                <p ><b>₱259</b></p>
+                <p style="text-decoration: line-through;">₱259</p>
+                <button>ADD TO <br>CART</button>
+                
+            </div>
+        </div>
+    </div>  
+    <div class="item-right">
+        <img src="{% static 'images/banner.jpg'%}" alt="" width="350px" height="400">
+    </div>
+</div>
+<!-- <div class="container-categories">
+    <div class="categories">
+        <div class="row">
+            <div class="columns">
+              
+   
+            </div>
+        </div>
+     
+
+    </div>
+</div> -->
+<div class="shop-category">
+    <div class="row">
+        <div class="shop-columns">
+            <h2>DEVICES</h2>
+        </div>
+        <div class="shop-columns">
+            <h2 style="font-size:30px ; text-align:center; color: black; font-weight: lighter; margin-top: 20px; padding-top: 20px; padding-left: 55px;  position: absolute;">Wiffbar Flavors</h2>
+            <img src="{% static 'images/pngvape.png'%}" alt="">
+            <a href="{% url 'collection' %}"><p style="text-align: center; margin-top:-50px;">View More &#8594;</p></a>
+        </div>
+    </div>
+
+</div>
+<!---OFFER-->
+<div class="offer">
+    <div class="small-container">
+        <div class="row">
+            <div class="col-2">
+                <img src="{% static 'images/product1.jpg' %}" class="offer-img">
+            </div>
+            <div class="col-2">
+                <p>Exclusively Available on Wiffbar</p>
+                <br>
+                <h1>Wiffbar Apple Flavor</h1>
+                <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique placeat tempora recusandae exercitationem error eligendi ipsa. Nemo dolorum rem recusandae deleniti autem repellendus, tempora, maxime aliquid provident cupiditate aut ad.</small>
+                <br>
+                <a href="" class="button">Buy Now &#8594;</a>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="products">
+    <h2>CHECK OUR BEST PRODUCTS</h2>
+    <div class="row">
+        <div class="col-5">
+            <img src="{% static 'images/product1.jpg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In sit, alias laudantium ipsam explicabo, quam animi fuga, veniam at exercitationem voluptas aperiam maxime sed nulla optio eius facere est error!</p>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/product 2.jpg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In sit, alias laudantium ipsam explicabo, quam animi fuga, veniam at exercitationem voluptas aperiam maxime sed nulla optio eius facere est error!</p>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/product3.jpg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In sit, alias laudantium ipsam explicabo, quam animi fuga, veniam at exercitationem voluptas aperiam maxime sed nulla optio eius facere est error!</p>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/product4.jpg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In sit, alias laudantium ipsam explicabo, quam animi fuga, veniam at exercitationem voluptas aperiam maxime sed nulla optio eius facere est error!</p>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="col-5">
+            <img src="{% static 'images/product3.jpg' %}" alt="">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In sit, alias laudantium ipsam explicabo, quam animi fuga, veniam at exercitationem voluptas aperiam maxime sed nulla optio eius facere est error!</p>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+    </div>
+    <center>    
+        <a href="{% url 'collection' %}"><button type="submit" class="button">View More</button></a>
+    </center>
+</div>
+<div class="benefits">
+    <center><h2>WHAT ARE THE BENEFITS</h2></center>
+    <div class="row">
+      
+        <div class="col-6">
+            <h1 style="font-size: 100px ;">1</h1>
+            <h3>SIMPLICITY</h3>
+            <p>A lightweight, compact and easy to use device.</p>
+            <p>E-liquids are in ready-to-use, pre-filled and</p>
+            <p>sealed with a wide variety of flavors to choose</p>
+        </div>
+        <div class="col-6">
+            <h1 style="font-size: 100px ;">2</h1>
+            <h3>SECURITY</h3>
+            <p>All our e-liquids and devices are made from</p>
+            <p>high quality materials in compliance with</p>
+            <p>world safety regulations and standards to let</p>
+        </div>
+        <div class="col-6">
+            <h1 style="font-size: 100px ;">3</h1>
+            <h3>LIBERTY</h3>
+            <p>All our Wiffbar Products are available in the</p>
+            <p>Philippines and everywhere else in the world</p>
+            <p>so you'll always be sure to find your e-cig Pods</p>
+        </div>
+    </div>
+</div>
+<!--Footer-->
+<style>
+    .footer {
+        width: 100%;
+        max-width: 100%;
+        background: black;
+        color: white;
+        padding: 60px;
+
+    }
+    .footer-col-1{
+        float: left;
+        flex-basis: 70%;
+        line-height: 30px;
+    }
+    .footer-col-1, .right-footer{
+        min-width: 250px;
+        margin-bottom: 20px;
+    }
+    .right-footer{
+        flex: 1;
+        margin-bottom: 20px;
+    }
+    .right-footer p {
+        margin-top: 60px;
+    }
+    @media screen and (max-width: 600px) {
+        .right-footer p{
+            display: block;
+            float: left;
+            text-align: center;
+            bottom: -70px;
+        }
+        .right-footer button {
+            position: relative;
+            left: 25%;
+            margin-bottom: -40px;
+        }
+        .right-footer input{
+            margin-bottom: 20px;
+        }
+    }
+
+</style>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Contact Us</h3>
+                <p>King plaza 5f 1709 Gatchalian</p>
+                <p>Ave, Paranaque, Metro Manila</p>
+                <p>09062793492</p>
+            </div>
+            <div class="right-footer">
+                <form class="searchbar" style="margin:auto; " >
+                    <input style="width: 200px ;" type="text" placeholder="Enter your Email" name="search">
+                    <button  type="submit" style="width:100px;">Subscribe</button>
+                  
+                </form>
+                <p>Be the first to know about our daily sales!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
