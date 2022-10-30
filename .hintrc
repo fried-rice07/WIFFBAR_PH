@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "axe/text-alternatives": [
+      "default",
+      {
+        "image-alt": "off"
+      }
+    ],
+    "axe/forms": "off",
+    "no-inline-styles": "off",
+    "axe/name-role-value": "off",
+    "highest-available-document-mode": "off",
+    "meta-viewport": "off",
+    "meta-charset-utf-8": "off",
+    "axe/parsing": [
+      "default",
+      {
+        "duplicate-id-aria": "off"
+      }
+    ],
+    "button-type": "off"
+  }
+}

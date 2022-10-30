@@ -125,36 +125,49 @@
 		<div class="top_tab">
 	<h3 class="title">Create Account</h3>
 </div>
+{% for msg in messages %}
+<div class="alert alert-{{msg.tags}}" role="alert">
+   <b>{{msg}}</b>
+  </div>
+{% endfor %}
 <div class="content clean">
-	<form class="register fl">
+	<form class="register fl" method="POST">
+		{% csrf_token %}
 		<div id="error_register_box" class="error_note_box"></div>
 		<div class="row box_side clean">
 			<div class="input_box">
 				<label for="FirstName">First name<i>*</i></label>
-				<input name="FirstName" id="FirstName" style="padding: 20px;" class="input_box_txt" type="text"notnull placeholder="your first name" />
+				<input  required name="first_name" id="FirstName" style="padding: 20px;" class="input_box_txt" type="text"notnull placeholder="your first name" />
 			</div>
 			<div class="input_box">
 				<label for="LastName">Last name<i>*</i></label>
-				<input name="LastName" id="LastName" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="your last name" />
+				<input required  name="last_name" id="LastName" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="your last name" />
+			</div>
+		</div>
+		<div class="row clean">
+			<div class="input_box">
+				<label for="username">Username<i>*</i></label>
+				<input required name="username" id="Email" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="username..." />
+			
 			</div>
 		</div>
 		<div class="row clean">
 			<div class="input_box">
 				<label for="Email">Email<i>*</i></label>
-				<input name="Email" id="Email" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="you@domain.com" />
+				<input required name="email" id="Email" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="you@domain.com" />
 			
 			</div>
 		</div>
 		<div class="row clean">
 			<div class="input_box">
 				<label for="Password">Password<i>*</i></label>
-				<input name="Password" id="Password" style="padding: 20px;" class="input_box_txt" type="password" placeholder="**********" />
+				<input required name="password" id="Password" style="padding: 20px;" class="input_box_txt" type="password" placeholder="**********" />
 			</div>
 		</div>
 		<div class="row clean">
 			<div class="input_box">
 				<label for="Password2">Confirm<i>*</i></label>
-				<input name="Password2" id="Password2" class="input_box_txt" style="padding: 20px;" type="password" placeholder="re-type password"  />
+				<input required name="password2" id="Password2" class="input_box_txt" style="padding: 20px;" type="password" placeholder="re-type password"  />
 				<p class="on_error">Passwords do not match. Please try again.</p>
 			</div>
 		</div>

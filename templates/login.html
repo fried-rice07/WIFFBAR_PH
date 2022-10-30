@@ -124,22 +124,28 @@
     <div id="signup" class="fl">
 		<div class="top_tab">
 	<h3 class="title">Log in</h3>
+	{% for msg in messages %}
+	<div class="alert alert-{{msg.tags}}" role="alert">
+	   <b>{{msg}}</b>
+	  </div>
+	{% endfor %}
     <p style="font-size:15px; margin-bottom:10px; color:gray;">Access your account & orders history</p>
 </div>
 <div class="content clean">
-	<form class="register fl">
+	<form class="register fl" method="POST">
+		{% csrf_token %}
 		<div id="error_register_box" class="error_note_box"></div>
 		<div class="row clean">
 			<div class="input_box">
-				<label for="Email">Username<i>*</i></label>
-				<input name="Email" id="Email" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="username..." />
+				<label for="username">Username<i>*</i></label>
+				<input name="username" id="Email" style="padding: 20px;" class="input_box_txt" type="text"  placeholder="username..." required />
 			
 			</div>
 		</div>
 		<div class="row clean">
 			<div class="input_box">
 				<label for="Password">Password<i>*</i></label>
-				<input name="Password" id="Password" style="padding: 20px;" class="input_box_txt" type="password" placeholder="**********" />
+				<input name="password" id="Password" style="padding: 20px;" class="input_box_txt" type="password" placeholder="**********"  required/>
 			</div>
 		</div>
 

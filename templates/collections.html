@@ -4,63 +4,28 @@
 <!--featured products-->
 <div class="small-container">
     <h2 class="title">All Collections</h2>
-    <div class="row">
-        <div class="col-4">
-            <img src="{% static 'images/product1.jpg' %}" alt="">
-            <p class="description">Menthol Plus 100% Original Authentic Depot Philippines</p>
-            <div class="rating">
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star-o" ></i>
-                <i class="fa fa-star-o" ></i>
+    <div class="rows">
+        {% for prod in product %}
+        <div class="column-4">
+        
+            <a href="{% url 'add-to-cart' prod.id %}"><img src="{{prod.image.url}}" alt=""></a>
+            <p class="description">{{prod.name_prod}}</p>
+            <div class="rating"" style="color:gray ;">
+                <i class="fa fa-star-o" style="color:gray ;" ></i>
+                <i class="fa fa-star-o" style="color:gray ;"></i>
+                <i class="fa fa-star-o" style="color:gray ;"></i>
+                <i class="fa fa-star-o" style="color:gray ;"></i>
+                <i class="fa fa-star-o" style="color:gray ;"></i>
+                0.0
+                (0 Reviews)
             </div>
-            <span>P 250.00</span>
-            <span style="text-decoration:line-through;">p 250.00</span>
-
+            <span><b>₱{{prod.price}}</b></span>
+            <span style="text-decoration:line-through;">{{prod.discount_price}}</span>
+       
         </div>
-        <div class="col-4">
-            <img src="{% static 'images/product 2.jpg' %}" alt="">
-            <p class="description">Menthol Plus 100% Original Authentic Depot Philippines</p>
-            <div class="rating">
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star-o" ></i>
-                <i class="fa fa-star-o" ></i>
-            </div>
-            <span>P 250.00</span>
-            <span style="text-decoration:line-through;">p 250.00</span>
-
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/product3.jpg' %}" alt="">
-            <p class="description">Menthol Plus 100% Original Authentic Depot Philippines</p>
-            <div class="rating">
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star-o" ></i>
-                <i class="fa fa-star-o" ></i>
-            </div>
-            <span>P 250.00</span>
-            <span style="text-decoration:line-through;">p 250.00</span>
-
-        </div>
-        <div class="col-4">
-            <img src="{% static 'images/product4.jpg' %}" alt="">
-            <p class="description">Menthol Plus 100% Original Authentic Depot Philippines</p>
-            <div class="rating">
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star" ></i>
-                <i class="fa fa-star-o" ></i>
-                <i class="fa fa-star-o" ></i>
-            </div>
-            <span>P 250.00</span>
-            <span style="text-decoration:line-through;">p 250.00</span>
-
-        </div>
+        {% endfor %}
+        
+    
     </div>
 
 </div>

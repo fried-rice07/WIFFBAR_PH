@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'wiffbar',
+    'wiffbar.apps.WiffbarConfig',
+    'crispy_forms',
 ]
+
+AUTH_USER_MODEL = 'wiffbar.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -106,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
@@ -115,7 +118,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = 'static/'
 STATICFILES_DIRS  = [ 
     (os.path.join(BASE_DIR, 'static'))

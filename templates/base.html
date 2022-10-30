@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     *{
         margin: 0;
         padding: 0;
@@ -22,13 +23,13 @@
         color: red;
 
     }
-    .container {
+    .containers {
         max-width: 1300px;
         margin: auto;
         padding-left: 25px;
         padding-right: 25px;
     }
-    .row {
+    .rows {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
@@ -41,7 +42,7 @@
     width: 100%;
     height: 100%;
     }
-    .header .row{
+    .header .rows{
         margin-top: 0;
     }
     /* Categories design */
@@ -63,7 +64,7 @@
         font-size: 60px;
         font-weight: 40;
     }
-    .col-3{
+    .column-3{
         flex-basis: 50%;
         min-width: 200px;
         padding: 20px;
@@ -82,19 +83,19 @@
 
     }
 
-    .col-3 img {
+    .column-3 img {
         width: 100px;
         max-width: 100%;
         float: left;
         margin: 0 15px 0 0;
     }
-    .col-3 p{
+    .column-3 p{
         padding-left: 5px;
         margin: 20px 0;
         vertical-align: middle;
         display: inline-block;
     }
-    .col-3 button {
+    .column-3 button {
         justify-content: center;
         border-radius: 10px;
         background-color: #222222;
@@ -129,15 +130,16 @@
         padding-right: 25px;
     }
     /*collections */
-    .col-4{
-        flex-basis: 25%;
+    .column-4{
+        flex-basis: 20%;
         padding: 10px;
         min-width: 200px;
         margin-bottom: 50px;
         transition: transform 0.5s;
     }
-    .col-4 img{
+    .column-4 img{
         width: 100%;
+        cursor: pointer;
 
     }
     .small-container{
@@ -158,7 +160,7 @@
     .rating .fa{
         color: #ff523b;
     }
-    .col-4:hover{
+    .column-4:hover{
         transform: translateY(-5px);
     }
     /* shop category */
@@ -190,18 +192,18 @@
         margin-top: 80px;
         padding: 30px 0;
     }
-    .col-2{
+    .column-2{
         flex-basis: 50%;
         min-width: 200px;
 
     }
-    .col-2 img{
+    .column-2 img{
         max-width: 100%;
         padding: 50px  0;
     }
-    .col-2 .offer-img {
-        padding: 50px;
-        max-width: 100%;
+    .column-2 .offer-img {
+        max-width: 90%;
+        width: 100%;
 
     }
     small {
@@ -227,23 +229,23 @@
         font-size: 40px;
         color: red;
     }
-    .col-5 {
+    .column-5 {
         flex-basis: 20%;
         padding: 5px;
         min-width: 200px;
         display: block;
 
     }
-    .col-5 img {
+    .column-5 img {
         width: 100%;
     }
     /* cart */
     .cart {
-        z-index: 999;
+        z-index: 1;
         display: block;
         position: fixed;
         top: 0;
-        right: -100%;
+        right: -120%;
         width: 350px;
         min-height: 100vh;
         padding: 40px;
@@ -265,8 +267,9 @@
         display: grid;
         grid-template-columns: 32% 50% 18%;
         align-items: center;
-        gap: 1rem;
+        gap: 2rem;
         margin-top: 1rem;
+        margin-right: 3rem;
 
     }
     .cart-img {
@@ -281,19 +284,23 @@
 
     }
     .cart-product-title {
-        border: 3px;
 
+        border: 3px;
         text-align: left;
         font-size: 15px;
-        width: 200px;
+        width: 150px;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
+        margin-top: 10px;
+        word-wrap: break-word;
         text-transform: uppercase;
     }
     .cart-price{
         font-weight: 900;
+        margin-top: -50px;
+        margin-left: 45px;
     }
     .cart-quantity{
         border:1px solid black;
@@ -351,7 +358,7 @@
         background-color: radial-gradient(#fff, #ffd6d6);
         margin-bottom: 50px;
     }
-    .col-6 {
+    .column-6 {
         align-items: center;
         text-align: center;
         flex-basis: 25%;
@@ -365,13 +372,13 @@
         margin-bottom: 50px;
         font-size: 40px;
     }
-    .col-6 h3{
+    .column-6 h3{
         margin-top: 50px;
         margin-bottom: 30px;
         font-size: 30px;
         font-weight: 300;
     }
-    .col-6 p {
+    .column-6 p {
         margin-bottom: 15px;
         font-size: 16px;
     }
@@ -381,7 +388,7 @@
     width:100%;
     min-width:100%;
     }
-    .header {
+    .headers {
     margin-bottom:0;
     height:10%;
     width:100%;
@@ -414,6 +421,7 @@
         /* Add a black background color to the top navigation */
     .topnav {
     overflow: hidden;
+
     }
 
     /* Style the links inside the navigation bar */
@@ -444,6 +452,7 @@
         float: right;
         display: block;
     }
+
     }
 
     /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
@@ -457,7 +466,15 @@
     }
     .topnav.responsive a {
         float: none;
-        margin-left: -5px;
+        margin-left: -10px;
+
+    }
+    .topnav.responsive .bx {
+        font-size: 35px;
+        font-weight: 100;
+        margin-top: 7px;
+        margin-right: 5px;
+        position: relative;
     }
     .topnav.responsive .layout {
         float: none;
@@ -470,14 +487,26 @@
     }
     .topnav.responsive .styl2{
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 15px;
         align-items: center;
+        position: relative;
 
     }
     .searchbar {
         width: 80%;
     }
+    .topnav.responsive .value {
+        display: none;
+    }
 
+    }
+    /* badge */
+    .value {
+        font-size: 15px;
+        margin:10px;
+        position: relative;
+        top: 2px;
+        vertical-align:middle;
     }
 </style>
 <head>
@@ -489,32 +518,93 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 
 </head>
+<script type="text/javascript">
+        
+    var user = '{{request.user}}'
+    /* this is for csrf token in javascript AJAX*/
+    function getToken(name){
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+            var cookies = document.cookie.split(';');
+            for (var i=0; i <  cookies.length; i++){
+                var cookie = cookies[i].trim();
+                //Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length +  1)=== (name + '=')){
+                    cookieValue = decodeURIComponent(cookie.substring(
+                        name.length + 1
+                    ));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken');
+    console.log("CRSF TOKEN : ", csrftoken)
+
+
+    function getCookie(name){
+        //Split cookie string and get all individual name = value pairs in an array
+        var cookieArr = document.cookie.split(";");
+        //Loop through the array elements
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            /* Removing whitespace at the beginning of the cookie name and compare
+            it with the given string */
+            if (name == cookiePair[0].trim()){
+                //decode the cookie value and return
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        //return null if not found
+        return null;
+    }
+
+    // var cart = JSON.parse(getCookie('cart'))
+    // if( cart == undefined) {
+    //     cart = {}
+    //     console.log('Cart was Created!')
+    //     document.cookie = 'cart = ' + JSON.stringify(cart) + ";domain=;path=/"
+    // }
+    // console.log('Cart:', cart)
+</script>
 <body>
     <div class="topnav" id="myTopnav">
     
-        <a href="{% url 'home' %}"><img src="{% static 'images/vapelogo.png' %}" alt="" width="200"></a>
+        <a href="{% url 'home' %}"><img src="{% static 'images/vapelogo.png' %}" alt="" width="250"></a>
   
         <a class="layout" style="float:left; position: relative; margin-top: 45px; justify-content: center; align-items: center; left: 22.5%;"><form class="searchbar" style="margin:auto; margin-left: 5%;" >
             <input type="text" placeholder="Search.." name="search">
             <button  type="submit"><i class="fa fa-search"></i></button>
         </form></a>
         
-        <a class="styl2" style="float:right; position: relative; margin-top: 45px;"><img src="{% static 'images/cart.png' %}" width="30px" id="cart-icon" style="cursor: pointer;"></a>
+        <a class="styl2" style="float:right; position: relative; margin-top: 45px;"><span class="value">{{order.cart_total}}</span><img src="{% static 'images/cart.png' %}" width="30px" id="cart-icon" style="cursor: pointer;"></a>
+        
+        {% if request.user.photo %}
+        <a href="{% url 'profile' %}" class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{{request.user.photo.url}}" width="50px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a>
+        {% elif request.user.is_authenticated%}
+        <a href="{% url 'profile' %}" class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{% static 'images/profile.png' %}" width="50px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a>
+
+        {% else %}
         <a  class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{% static 'images/profile.png' %}" alt="" width="30px" id="myBtn" style="cursor: pointer;"></a>
+       
+        {% endif %}
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
         </a>
 
        
       </div>
-    <div class="header">
+    <div class="headers">
 
-    <div class="container">
+    <div class="containers">
     <style>
                 /* The Modal (background) */
-        .modal {
+        .modals {
         font-family: "Raleway", sans-serif;
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
@@ -529,48 +619,53 @@
         }
 
         /* Modal Content/Box */
-        .modal-content {
+        .modal-contents {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%) scale(1.25);
-            width: 300px;
+            width: 400px;
             padding: 20px 30px;
             background: white;
             box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.15);
             border-radius: 5px;
         }
+        @media (max-width:600px){
+            .modal-contents {
+                width: 250px;
+            }
+        }
 
         /* The Close Button */
-        .close {
+        .close-but {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
+        .close-but:hover,
+        .close-but:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
         }  
-        .popup .form h2 {
+        .popups .forms h2 {
             text-align: center;
             color: #222;
             margin: 10px 0px 20px;
             font-size: 25px;
         }
-        .popup .form .form-element {
+        .popups .forms .form-elements {
             margin: 15px 0px;
         }
-        .popup .form .form-element label{
+        .popups .forms .form-elements label{
             font-size: 14px;
             color: #222;
 
         }
-        .popup .form .form-element input[type="text"],
-        .popup .form .form-element input[type="password"] {
+        .popups .forms .form-elements input[type="text"],
+        .popups .forms .form-elements input[type="password"] {
             margin-top: 5px;
             display: block;
             width: 100%;
@@ -580,7 +675,7 @@
             border-radius: 2px;
 
         }
-        .popup .form .form-element input[type="checkbox"] {
+        .popups .forms .form-elements input[type="checkbox"] {
             text-align: left;
             font-size: 10px;
             color: #666;
@@ -588,7 +683,7 @@
             font-weight: 600;
 
         }
-        .popup .form .form-element button {
+        .popups .forms .form-elements button {
             width: 100%;
             height: 40px;
             border: none;
@@ -600,7 +695,7 @@
             cursor: pointer;
 
         }
-        .popup .form .form-element a {
+        .popups .forms .form-elements a {
             display: block;
             text-align: right;
             font-size: 10px;
@@ -609,51 +704,55 @@
             font-weight: 600;
 
         }
-        .popup p {
+        .popups p {
             font-size: 10px;
             font-weight: 600;
             color: #888;
 
         }
-        .popup a {
+        .popups a {
             font-size: 10px;
             color: #222;
         }
     </style>
-  
+    
 
             <!-- Login  Modal -->
-            <div id="myModal" class="modal">
+            <div id="myModal" class="modals">
 
             <!-- Modal content -->
-            <div class="modal-content">
+            <div class="modal-contents">
                   <!--Login button modal form-->
-            <div class="popup" >
-                <div class="close">&times;</div>
-                <div class="form">
+            <div class="popups">
+                <div class="close-but">&times;</div>
+         
+                <form class="forms" method="POST">
+        
+                    {% csrf_token %}
+                 
                     <h2>LOG IN</h2>
-                    <div class="form-element">
-                        <label form="email">Email</label>
-                        <input type="text" id="email" >
+                    <div class="form-elements">
+                        <label form="username">Username</label>
+                        <input type="text" id="email" name="username" required >
                     </div>
                     
-                    <div class="form-element">
+                    <div class="form-elements">
                         <label for="password">Password</label>
-                        <input type="password" id="password">
+                        <input type="password" id="password" name="password" required>
                     </div>
-                    <div class="form-element">
-                        <a href="#">Forgot Password?</a>
+                    <div class="form-elements">
+                        <a href="{% url 'password_change' %}">Forgot Password?</a>
                         <input type="checkbox" id="remember-me">
                         <label for="remember-me">Remember me</label>
                     </div>
-                    <div class="form-element">
+                    <div class="form-elements">
                         <button type="submit">Login</button>
                     </div>
                     <div class="sign-up">
                         <center><p>No account? <a href="{% url 'signup' %}" onclick="document.getElementById('id01').style.display='block'" style="text-decoration:underline;">Sign-up</a></p></center>
                     </div>
+                </form>
             
-                </div>
             </div>
             
             </div>
@@ -669,7 +768,7 @@
             var btn = document.getElementById("myBtn");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+            var span = document.getElementsByClassName("close-but")[0];
 
             // When the user clicks on the button, open the modal
             btn.onclick = function() {
@@ -697,49 +796,55 @@
             <div class="cart">
                 <h2 class="cart-title">Your Shopping Cart</h2>
                 <!--Content-->
-                <div class="cart-content">
+                <style>
+                    .cart-content {
+                        overflow:scroll;
+                        height: 580px;
+                    }
+                    .arrow {
+                        margin-top:5px ;
+                    }
+                    .quantity {
+                        font-weight: 900;
+                        margin-top: -40.5px;
+                        margin-left: 5px;
+                        font-size: 14px;  
+                        color: red; 
+                    }
+                </style>
+                <div class="cart-content" >
+                   {% for items in item %}
                     <div class="cart-box">
-                        <img src="{% static 'images/product1.jpg'%}" alt="" class="cart-img" >
+                        <img src="{{items.product.imageURL}}" alt="" class="cart-img" >
                         <div class="detail-box">
                             
-                            <div class="cart-product-title">ZALAN K1 Device Kit Vape kit 100%Original Authentic Depot Philippines
-                                ZA-K1 MOD-GREEN</div>
-            
-                
-                            <input type="number" value="1" class="cart-quantity">
-                            <div class="cart-price">25 pesos</div>  
+                            <div class="cart-product-title">{{items.product.name_prod}}</div>
+                            {% load static %}
+                            <img data-product="{{items.product.id}}" data-action="add" class="bx bx-plus update-cart" style="cursor: pointer;" src="{% static 'images/prod/arrow-up.png' %}" alt="" width="20" onsubmit="func(e)">
+                            <img data-product="{{items.product.id}}" data-action="remove" class="arrow update-cart" style="cursor: pointer;" src="{% static 'images/prod/arrow-down.png' %}" alt="" width="20">
+                            <p class="quantity">{{items.quantity}}</p>
+                            <div class="cart-price">{{items.total}}</div>  
 
                         </div>
                         <!--Remove Cart-->
-                        <i class='bx bxs-trash cart-remove' ></i> 
-            
+                        <a href="{% url 'delete-product' items.id %}">
+                            <i class='bx bxs-trash cart-remove' ></i>
+                        </a> 
+                 
                     </div>
-                    <div class="cart-box">
-                        <img src="{% static 'images/product1.jpg'%}" alt="" class="cart-img" >
-                        <div class="detail-box">
-                            
-                            <div class="cart-product-title">ZALAN K1 Device Kit Vape kit 100%Original Authentic Depot Philippines
-                                ZA-K1 MOD-GREEN</div>
-            
-                
-                            <input type="number" value="1" class="cart-quantity">
-                            <div class="cart-price">25 pesos</div>  
-
-                        </div>
-                        <!--Remove Cart-->
-                        <i class='bx bxs-trash cart-remove' ></i> 
-            
-                    </div>
-                </div>
+                    {% endfor %}
+     
+        
                 <!--Total-->
                 <div class="total">
                     <div class="total-title">Total</div>
-                    <div class="total-price">0</div>
+                    <div class="total-price">{{order.cart_total}}</div>
                 </div>
                 <!--Buy Button-->
                 <button type="submit" class="btn-buy">Checkout</button>
                 <!-- CART -->
                 <i class="bx bx-x" id="close-cart"></i>
+            </div>
             </div>
         </div>
     </div>
@@ -777,5 +882,116 @@
 {% block content %}
 
 {% endblock content %}
+<!--Footer-->
+<style>
+    .footer {
+        width: 100%;
+        max-width: 100%;
+        background: black;
+        color: white;
+        padding: 60px;
+
+    }
+    .footer-col-1{
+        float: left;
+        flex-basis: 70%;
+        line-height: 40px;
+    }
+    .footer-col-1, .right-footer{
+        min-width: 250px;
+        margin-bottom: 20px;
+    }
+    .right-footer{
+        flex: 1;
+        margin-bottom: 20px;
+    }
+    .right-footer p {
+        margin-top: 60px;
+    }
+    @media screen and (max-width: 600px) {
+        .right-footer p{
+            display: block;
+            float: left;
+            text-align: center;
+            bottom: -70px;
+        }
+        .right-footer button {
+            position: relative;
+            left: 25%;
+            margin-bottom: -40px;
+        }
+        .right-footer input{
+            margin-bottom: 20px;
+        }
+    }
+    .right-footer h5{
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+    .right-footer i {
+        margin-top: 20px;
+        font-size: 30px;
+    }
+</style>
+<div class="footer">
+    <div class="containers">
+        <div class="rows">
+            <div class="footer-col-1">
+                <h3>Contact Us</h3>
+                <p>Block 7 Lot 23 Ph.2 Regina Ville 2000</p>
+                <p>Brgy.Inocencio Trece Martires City</p>
+                <p>09973664053</p>
+            </div>
+            <div class="right-footer">
+                <form class="searchbar" style="margin:auto; " >
+                    <input style="width: 200px ;" type="text" placeholder="Enter your Email" name="search">
+                    <button  type="submit" style="width:100px;">Subscribe</button>
+                  
+                </form>
+                <p>Be the first to know about our daily sales!</p>
+                <h5 style="color: rgb(243, 53, 53);">Follow Us</h5>
+                <i class='bx bxl-facebook-circle'></i>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var updateBtns = document.getElementsByClassName('update-cart')
+  
+    for (i=0; i < updateBtns.length; i++){
+        updateBtns[i].addEventListener('click', function(){
+            var productId = this.dataset.product
+            var action = this.dataset.action
+            console.log('productId:',productId,'Action:', action)
+    
+            console.log('USER:', user)
+            if (user== 'AnonymousUser'){
+                console.log('Not Logged In')
+            }else{
+                updateUserOrder(productId, action)
+            }
+        })
+    }
+    function updateUserOrder(productId, action){
+        console.log('User is authenticated, sending data..')
+            var url  = '/update-item/'
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body:JSON.stringify({'productId':productId, 'action' :action})
+            })
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                console.log('DATA:', data)
+                window.location.href = ""
+            });
+    }
+</script>
 </body>
 </html>

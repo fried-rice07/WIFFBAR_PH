@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block content  %}
+<!--Product Details -->
+<style>
+    .single-product {
+        margin-top: -20px;
+
+    }
+    .single-product .column-2 img{
+        padding: 0;
+
+
+    }
+    .single-product .column-2 {
+        padding: 20px;
+
+    }
+    .single-product h4{
+        margin: 20px 0;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .single-product select {
+        display: block;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .single-product input {
+        width: 50px;
+        height: 40px;
+        padding-left: 10px;
+        font-size: 20px;
+        margin-right: 10px;
+        border: 1 solid;
+
+    }
+    input:focus{
+        outline: none;
+    }
+    .single-product .fa {
+        margin-left: 10px;
+
+    }
+    .small-img-rows {
+        display: flex;
+        justify-content: space-between;
+    }
+    .small-img-col {
+        flex-basis: 23%;
+        cursor: pointer;
+    }
+    .column-2 h3{
+
+        font-size: 20px;
+    }
+    .column-2 p {
+        text-align: left;
+    }
+    @media  (max-width:600) {
+        .column-2{
+            display: block;
+            text-align: center;
+        }
+        
+    }
+</style>
+
+<div class="small-container single-product">
+    <div class="rows">
+        <div class="column-2">
+            {% load static %}
+            <img src="{{prod.imageURL}}" alt="" width="100%" id="ProductImg">
+        
+        </div>
+        <div class="column-2" style="margin: 0 15px 0 0;" >
+           <center>
+            <h1>{{prod.name_prod}}</h1>
+            <h4>₱{{prod.price}}</h4>
+            <!-- <select>
+                <option> Select Size</option>
+                <option> Small </option>
+                <option> Medium </option>
+                <option> Large </option>
+            </select>
+            <input type="number" value="1"> -->
+            <button class="update-cart" data-action="add" data-product="{{prod.id}}">Add to Cart</button>
+            
+           </center>
+           <div class="descript">
+            <h3 style="margin-top: 20px;" ><b>DESCRIPTION</b></i> </h3>
+            <br>
+             <p><b>💥 Welcome to the Store</b><br><b>💥 100% ORIGINAL PRODUCT</b><br>-7000 disposable pod 16ml
+             <br>-550MAH Battery Capacity
+             <br>-No leakage
+             <br>-Rechargeable with Type C
+             <br>Sealed Package
+             <br>
+             <b>Please Kindly Note: </b><br>
+             If there is a problem with the product, please contact us first and don't leave a bad review, because we 
+             will replace a new one for you for free (after confirming that it is a product quality problem ) We highly
+             recommend to video a short clip of unboxing upon and opening and using the product so that incase of any defects,
+             we can verify your concern easily, No unboxing video. No Replacement.
+             </p>            
+           </div>
+          
+        </div>
+    </div >
+</div>
+
+<style>
+    .small-container h1 {
+        margin-top: 20px;
+    text-align: center;
+    color: red;
+    text-shadow: 1px 1px 0 white;
+    }
+
+    .small-container form {
+    max-width: 600px;
+    text-align: center;
+    margin: 20px auto;
+    }
+    .small-container form input, form textarea {
+    border: 0;
+    outline: 0;
+    padding: 1em;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+    font-family: 'Merriweather', sans-serif;
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    resize: none;
+    }
+    .small-container form input:focus, form textarea:focus {
+    -moz-box-shadow: 0 0px 2px #e74c3c !important;
+    -webkit-box-shadow: 0 0px 2px #e74c3c !important;
+    box-shadow: 0 0px 2px #e74c3c !important;
+    }
+    .small-container form #input-submit {
+    color: white;
+    background: #e74c3c;
+    cursor: pointer;
+    }
+    .small-container form #input-submit:hover {
+    -moz-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+    -webkit-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+    box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+    }
+    .small-container form textarea {
+    height: 126px;
+    }
+
+    .half {
+    float: left;
+    width: 48%;
+    }
+
+    .right {
+    width: 50%;
+    }
+
+    .left {
+    margin-right: 2%;
+    }
+
+    @media (max-width: 480px) {
+    .half {
+        width: 100%;
+        float: none;
+        margin-bottom: 0;
+    }
+    }
+
+
+</style>
+<div class="customer-review">
+    <div class="rows">
+        <div class="small-container" style="margin-top:10px; width: 100%; ">
+            <h1>Customer Review</h1>
+            <form class="cf">
+            <div class="half left cf">
+                <input type="text" id="input-name" placeholder="Email Address">
+            </div>
+            <div class="half right cf">
+                <textarea name="message" type="text" id="input-message" placeholder="Message"></textarea>
+            </div>  
+            <input type="submit" value="Submit" id="input-submit">
+            <p style=" word-wrap: break-word; text-align: left; margin-top: 20px;">
+                <img src="{% static 'images/product1.jpg'%}" width="60px" style="border-radius:50% ;  float: left; margin: 0 15px 0 0 ;">
+                <b style="float: left;">admin</b>
+                <span style="margin-left:14px ; color: gray; font-size: 14px;"> 01/10/10</span>
+                <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati corrupti vitae cupiditate? Rerum, ea in et nostrum incidunt velit minima tenetur voluptatum architecto porro harum iusto cumque saepe nam recusandae.
+            </p>
+           
+            
+            </form>
+
+
+     
+        </div>
+
+    </div>
+
+
+</div>
+<style>
+    .column-10 {
+        flex-basis: 20%;
+        min-width: 250px;
+        padding: 5px;
+        display: block;
+    }
+    .column-10 img {
+        width: 100%;
+    }
+</style>
+<div class="products">
+    <h2 >You May Also Like</h2>
+    <div class="rows">
+        <div class="column-10">
+            <img src="{% static 'images/product1.jpg' %}" alt="">
+            <h5>WIFFBAR Menthol Plus</h5>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="column-10">
+            <img src="{% static 'images/product 2.jpg' %}" alt="">
+            <h5>WIFFBAR Watermelon Iced</h5>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="column-10">
+            <img src="{% static 'images/product3.jpg' %}" alt="">
+            <h5>WIFFBAR Grape Iced</h5>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="column-10">
+            <img src="{% static 'images/product4.jpg' %}" alt="">
+            <h5>WIFFBAR Green Apple</h5>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+        <div class="column-10">
+            <img src="{% static 'images/prod/lycheeiced.jpg' %}" alt="">
+            <h5>WIFFBAR Lychee Iced</h5>
+            <center>
+                <span><strong>P 250.00</strong></span>
+                <span style="text-decoration:line-through;">p 250.00</span>
+            </center>
+        </div>
+
+    </div>
+    <center>    
+        <a href="{% url 'collection' %}"><button type="submit" class="button">View More</button></a>
+    </center>
+</div>
+<div class="" style="margin-bottom: 200px;"></div>
+<!-- js for product gallery -->
+<!-- <script>
+    var ProductImg = document.getElementById("ProductImg");
+    var SmallImg = document.getElementsByClassName("small-img");
+
+        SmallImg[0].onclick = function(){
+            ProductImg.src = SmallImg[0].src;
+        }
+        SmallImg[1].onclick = function(){
+            ProductImg.src = SmallImg[1].src;
+        }
+        SmallImg[2].onclick = function(){
+            ProductImg.src = SmallImg[2].src;
+        }
+        SmallImg[3].onclick = function(){
+            ProductImg.src = SmallImg[3].src;
+        }
+
+</script> -->
+
+{% endblock content %}
