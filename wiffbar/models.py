@@ -24,11 +24,20 @@ class User(AbstractUser):
     photo = models.ImageField(upload_to='static/images' , blank=True)
     address = models.CharField(max_length = 50, blank=True)
     phone_no = models.IntegerField(null=True)
+    form_submitted = models.BooleanField(default=True)
     gender = models.CharField(max_length=10, choices=choice_gender, blank=True)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
     def __str__(self):
         return "{}".format(self.username)
+    @property
+    def image(self):
+        try:
+            url = self.photo.url
+        except:
+            url = ""
+        
+        return url
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -57,7 +66,7 @@ class Product(models.Model):
     discount_price = models.DecimalField(max_digits=7 , decimal_places=2)
     digital = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(null=True,blank=True)
-    select = models.CharField(max_length=20, choices=choice_select, blank=True)
+    select = models.CharField(max_length=100, choices=choice_select, blank=True)
 
     def __str__(self):
         return self.name_prod
@@ -141,3 +150,12 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.address
 
+class CustomerReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField(max_length=1000, blank=True)
+    rating = models.CharField(max_length=1,blank=True)
+    prod = models.CharField(max_length=100, null=True)
+    date = models.TimeField(auto_now=False,auto_now_add=False)
+    def __str__(self):
+        return self.user.username
+    

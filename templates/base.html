@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<link rel="icon" type="image/png" href="/static/images/logo.png">
+<title>WIFFBAR PH</title>
 {% load static %}
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
@@ -41,6 +47,7 @@
     max-height:100%;
     width: 100%;
     height: 100%;
+ 
     }
     .header .rows{
         margin-top: 0;
@@ -209,19 +216,7 @@
     small {
         color: #555;
     }
-    .button {
-        justify-content: center;
-        border-radius: 10px;
-        background-color: #222222;
-        border: none;
-        color: white;
-        padding: 2%;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        line-height: 20px;
-    }
+
     .products h2{
         margin-top:50px;
         margin-bottom: 20px;
@@ -241,9 +236,10 @@
     }
     /* cart */
     .cart {
+
         z-index: 1;
         display: block;
-        position: fixed;
+        position:fixed;
         top: 0;
         right: -120%;
         width: 350px;
@@ -267,20 +263,24 @@
         display: grid;
         grid-template-columns: 32% 50% 18%;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
         margin-top: 1rem;
-        margin-right: 3rem;
+        margin-right: 4rem;
 
     }
     .cart-img {
-        width: 100px;
+        margin-top: -50px;
+        width: 100%;
         height: 100px;
         object-fit: contain;
         padding: 5px;
+        border-radius: 20%;
+
     }
     .detail-box {
         display: grid;
         row-gap: 0.5rem;
+   
 
     }
     .cart-product-title {
@@ -293,14 +293,15 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
-        margin-top: 10px;
         word-wrap: break-word;
         text-transform: uppercase;
     }
     .cart-price{
         font-weight: 900;
-        margin-top: -50px;
-        margin-left: 45px;
+        position: relative;
+        top: 40%;
+        left: -45%;
+        right: 0;
     }
     .cart-quantity{
         border:1px solid black;
@@ -341,7 +342,7 @@
 
     }
     .btn-buy:hover{
-        background: red;
+        background:#ff523b;
     }
     #close-cart{
         position: absolute;
@@ -508,19 +509,43 @@
         top: 2px;
         vertical-align:middle;
     }
+    .go-top {
+	position:fixed;
+	bottom: 40%;
+	right: 5%;
+	padding:20px;
+	display:none;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+	z-index: 1;
+	top: 90%;
+	}
+	.go-top:after {
+	font-family: FontAwesome;
+	content: "\f106";
+	background-color: #e74c3c;
+	padding: 0px 20px;
+    margin-left: 10px;
+	color:white;
+	position: absolute; 
+	bottom:20px;
+	font-size: 30px;
+    height: 50px;
+	border-radius: 100%;
+	}
+
 </style>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiffbar | Ecommerce Website </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <script type="text/javascript">
         
@@ -544,7 +569,6 @@
         return cookieValue;
     }
     var csrftoken = getToken('csrftoken');
-    console.log("CRSF TOKEN : ", csrftoken)
 
 
     function getCookie(name){
@@ -564,42 +588,193 @@
         return null;
     }
 
-    // var cart = JSON.parse(getCookie('cart'))
-    // if( cart == undefined) {
-    //     cart = {}
-    //     console.log('Cart was Created!')
-    //     document.cookie = 'cart = ' + JSON.stringify(cart) + ";domain=;path=/"
-    // }
-    // console.log('Cart:', cart)
+    var cart = JSON.parse(getCookie('cart'))
+    if( cart == undefined) {
+        cart = {}
+        console.log('Cart was Created!')
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    }
+    console.log('Cart:', cart)
 </script>
 <body>
-    <div class="topnav" id="myTopnav">
+    <div class="go-top">
+       </div>
+	</div>
     
-        <a href="{% url 'home' %}"><img src="{% static 'images/vapelogo.png' %}" alt="" width="250"></a>
-  
-        <a class="layout" style="float:left; position: relative; margin-top: 45px; justify-content: center; align-items: center; left: 22.5%;"><form class="searchbar" style="margin:auto; margin-left: 5%;" >
-            <input type="text" placeholder="Search.." name="search">
-            <button  type="submit"><i class="fa fa-search"></i></button>
-        </form></a>
-        
-        <a class="styl2" style="float:right; position: relative; margin-top: 45px;"><span class="value">{{order.cart_total}}</span><img src="{% static 'images/cart.png' %}" width="30px" id="cart-icon" style="cursor: pointer;"></a>
-        
-        {% if request.user.photo %}
-        <a href="{% url 'profile' %}" class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{{request.user.photo.url}}" width="50px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a>
-        {% elif request.user.is_authenticated%}
-        <a href="{% url 'profile' %}" class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{% static 'images/profile.png' %}" width="50px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a>
+    <script>
+        $(function(){
 
-        {% else %}
-        <a  class="layout"style="float:right;position: relative; margin-top: 45px;"><img src="{% static 'images/profile.png' %}" alt="" width="30px" id="myBtn" style="cursor: pointer;"></a>
-       
-        {% endif %}
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-        </a>
+        //Scroll event
+        $(window).scroll(function(){
+        var scrolled = $(window).scrollTop();
+        if (scrolled > 200) $('.go-top').fadeIn('slow');
+        if (scrolled < 200) $('.go-top').fadeOut('slow');
+        });
 
-       
-      </div>
-    <div class="headers">
+        //Click event
+        $('.go-top').click(function () {
+        $("html, body").animate({ scrollTop: "0" },  500);
+        });
+
+        });
+
+    </script>
+    <style>
+        nav {
+            display: flex;
+            width: 100%;
+            background: none;
+            position: relative;
+            justify-content: space-between;
+            text-align: center;
+            padding: 40px 35px;
+        }
+        nav .icon {
+            font-size: 35px;
+            font-weight: 800;
+            color: black;
+            cursor: pointer;
+
+        }
+        nav ol{
+            display: flex;
+            list-style: none;
+            margin: auto 0;
+        }
+        nav ol li{
+            margin: 0 2px;
+
+        }
+        nav ol li a{
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            padding: 5px 10px;
+        }
+
+        nav .search_box {
+
+            display: flex;
+            margin: auto 0;
+            height: 40px;
+            line-height: 35px;
+
+        }
+        nav .search_box input{
+            border: none;
+            outline: none;
+            background: white;
+            height: 100%;
+            padding: 0 10px;
+            font-size: 20px;
+            width: 400px;
+        }
+        nav .search_box span {
+            color: white;
+            font-size: 20px;
+            background: black;
+            width: 50px;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+        }
+        nav.search_box span:hover{
+            color: white;
+        }
+        nav .search_box span::after{
+            height: 100%;
+            width: 0%;
+            content: '';
+            background-color: #e74c3c;
+            position: absolute;
+            top:0;
+            right: 0;
+            z-index: -1;
+            transition: 0.3s;
+
+        }
+        nav .search_box span:hover::after{
+            width: 100%;
+
+        }
+        nav .bar{
+            position: relative;
+            margin: auto;
+            display: none;
+        }
+        nav .bar span{
+            position: absolute;
+            color: black;
+            font-size:35px;
+        
+        }
+        input[type="checkbox"]{
+            appearance: none;
+            display: none;
+
+        }
+        @media screen and (max-width:1250px) {
+            nav{
+                display:block;
+                padding: 0;
+
+            }
+            nav .icon{
+                display: inline-block;
+                padding: 15px 30px;
+            }
+            nav .search_box {
+                width: 100%;
+                display: inline-flex;
+                justify-content: center;
+                margin-bottom:15px;
+            }
+            nav .search_box input {
+                width: 90%;
+
+            }
+            nav ol{
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                padding: 20px;
+                flex-direction:row;
+                background: #ffff;
+            }
+
+            
+        }
+
+    </style>
+    <nav>
+        <div class="icon"><a href="{% url 'home' %}"><img src="{% static 'images/vapelogo.png' %}" alt="" width="250"></a></div>
+        <form class="search_box" method="GET" action="{% url 'search-product' %}">
+            {% csrf_token %}
+            <input type="search" placeholder="Search Here.." name="searched">
+            <button type="submit"><span class="fa fa-search"></span></button>
+
+        </form>
+        <ol>
+            {% if request.user.photo %}
+            <li><a href="{% url 'profile' %}"><img src="{{request.user.photo.url}}" width="40px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a></li>
+            {% elif request.user.is_authenticated%}
+            <li><a href="{% url 'profile' %}" ><img src="{% static 'images/profile.png' %}" width="40px"  style="border-radius: 50%;" onerror="this.onerror=null; this.remove();"></a></li>
+            {% else %}
+            <li><a><img src="{% static 'images/profile.png' %}" alt="" width="40px" id="myBtn" style="cursor: pointer; border-radius: 50%;"></a></li>     
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li><a><span class="value" id="total">{{order.cart_total}}</span><img src="{% static 'images/cart.png' %}" width="40px" id="cart-icon" style="cursor: pointer;"></a></li>
+            {% else %}
+            <li><a><span class="value" id="total">{{order.get_cart_total}}</span><img src="{% static 'images/cart.png' %}" width="40px" id="cart-icon" style="cursor: pointer;"></a></li>
+            {% endif %}
+           
+        </ol>
+
+    </nav>
 
     <div class="containers">
     <style>
@@ -630,7 +805,7 @@
             box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.15);
             border-radius: 5px;
         }
-        @media (max-width:600px){
+        @media only screen and (max-width:600px){
             .modal-contents {
                 width: 250px;
             }
@@ -746,7 +921,7 @@
                         <label for="remember-me">Remember me</label>
                     </div>
                     <div class="form-elements">
-                        <button type="submit">Login</button>
+                        <button type="submit" name="login">Login</button>
                     </div>
                     <div class="sign-up">
                         <center><p>No account? <a href="{% url 'signup' %}" onclick="document.getElementById('id01').style.display='block'" style="text-decoration:underline;">Sign-up</a></p></center>
@@ -793,81 +968,210 @@
         </script>
 
             <!--cart-->
-            <div class="cart">
+            <div class="cart" >
                 <h2 class="cart-title">Your Shopping Cart</h2>
+                <hr>
                 <!--Content-->
                 <style>
-                    .cart-content {
-                        overflow:scroll;
-                        height: 580px;
+                   
+                    .cart-content{
+                        width: 100%;
+                        margin-right: 50px;
+                        height: 380px;
+                        overflow: scroll;
                     }
-                    .arrow {
-                        margin-top:5px ;
+                    .wrapper{
+               
+                        width: 90px;
+                        height: 20px;
+                        min-width: 30px;
+                        background: #ffff;
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 0px 10px rgba(0,0,0,0.2);
                     }
-                    .quantity {
-                        font-weight: 900;
-                        margin-top: -40.5px;
-                        margin-left: 5px;
-                        font-size: 14px;  
-                        color: red; 
+                    .wrapper span {
+                        width: 100%;
+                        text-align: center;
+                        font-size: 20px;
+                        font-weight: 600;
+
                     }
+                    .wrapper span.num {
+                        font-size: 15px;
+                        border-right: 2px solid rgba(0,0,0,0.2);
+                        border-left: 2px solid rgba(0,0,0,0.2);
+                    }
+                    .box {
+                        width: 100%;
+                        text-align: center;
+                        }
+
+                        .quantity {
+                        position: relative;
+                        display: inline-block;
+                        color: #7f7f7f;
+                        }
+                        .quantity input[type=number] {
+                        transition: border 0.3s ease-in-out, color 0.3s ease-in-out;
+                        -webkit-appearance: textfield;
+                        -moz-appearance: textfield;
+                        appearance: textfield;
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        line-height: 24px;
+                        font-weight: 700;
+                        box-shadow: none;
+                        outline: none;
+                        width: 42px;
+                        height: 34px;
+                        text-align: center;
+                        float: right;
+                        border: 1px solid #dcdcdc;
+                        background-color: #fff;
+                        color: #342f2f;
+                        }
+                        .quantity input[type=number]:focus {
+                        border-color: #57b8f6 !important;
+                        }
+                        .quantity input[type=number]:hover {
+                        border-color: #a5a5a5;
+                        }
+                        .quantity-button {
+                        width: 39px;
+                        height: 34px;
+                        display: inline-block;
+                        float: right;
+                        position: relative;
+                        cursor: pointer;
+                        }
+                        .quantity-button::before, .quantity-button::after {
+                        position: absolute;
+                        top: calc(50% - 1px);
+                        left: calc(50% - 7px);
+                        content: "";
+                        width: 14px;
+                        height: 2px;
+                        background-color: currentColor;
+                        display: block;
+                        }
+                        .quantity-remove::after {
+                        display: none;
+                        }
+                        .quantity-add::after {
+                        transform: rotate(90deg);
+                        }
                 </style>
-                <div class="cart-content" >
-                   {% for items in item %}
+                <div class="cart-content">
+
+                {% if item %}
+                    {% for items in item %}
+                   
                     <div class="cart-box">
-                        <img src="{{items.product.imageURL}}" alt="" class="cart-img" >
+                        <a href="{% url 'cart' %}"><img src="{{items.product.imageURL}}" alt="" class="cart-img" ></a>
+    
                         <div class="detail-box">
-                            
-                            <div class="cart-product-title">{{items.product.name_prod}}</div>
+                        
+                            <a href="{% url 'cart'  %}" style="color: black;"><div class="cart-product-title">{{items.product.name_prod}}</div></a>
                             {% load static %}
-                            <img data-product="{{items.product.id}}" data-action="add" class="bx bx-plus update-cart" style="cursor: pointer;" src="{% static 'images/prod/arrow-up.png' %}" alt="" width="20" onsubmit="func(e)">
+                            
+                            <div>
+                                {% if user.is_authenticated%}
+                                <input type="number" id="num_quantity" min="1" max="999" oninput="this.value = 
+                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"  value="{{items.quantity}}" data-product="{{items.product.id}}" >
+                                {% else %}
+                                <div class="box">
+                                    <div class="quantity">
+                                      <span class="quantity-add quantity-button plus update-cart" data-product="{{items.product.id}}" style="cursor: pointer;" data-action="add"></span>
+                                        <input type="number" step="1" min="1" value="{{items.quantity}}">
+                                        <span class="quantity-remove quantity-button minus update-cart" style="position:absolute;left:-45%; cursor: pointer;" data-action="remove" data-product="{{items.product.id}}"></span>
+                                    </div>
+                                  </div>
+                                <!-- <span data-product="{{items.product.id}}" class="minus update-cart" style="cursor: pointer;" data-action="remove"  >-</span>
+                                <span class="num">{{items.quantity}}</span>
+                                <span data-product="{{items.product.id}}" class="plus update-cart" style="cursor: pointer;" data-action="add">+</span> -->
+                                {% endif %}
+                             
+                            </div>
+                            <tr>
+                                <td> <p class="cart-price">&#8369;{{items.total}}</p></td>
+                            </tr>
+                           
+                   
+                            <!-- <img  data-action="add" class="bx bx-plus update-cart" style="cursor: pointer;" src="{% static 'images/prod/arrow-up.png' %}" alt="" width="20" onsubmit="func(e)">
                             <img data-product="{{items.product.id}}" data-action="remove" class="arrow update-cart" style="cursor: pointer;" src="{% static 'images/prod/arrow-down.png' %}" alt="" width="20">
-                            <p class="quantity">{{items.quantity}}</p>
-                            <div class="cart-price">{{items.total}}</div>  
+
+                            
+                            <p class="quantity">{{items.quantity}}</p> -->
+                            <!-- <div class="cart-price">{{items.total}}</div>   -->
 
                         </div>
                         <!--Remove Cart-->
-                        <a href="{% url 'delete-product' items.id %}">
-                            <i class='bx bxs-trash cart-remove' ></i>
+                        {% if user.is_authenticated %}
+                        <a href='{% url "delete-product" items.id %}'>
+                            <i class='bx bxs-trash cart-remove' style="opacity: 40%; font-size: 20px;"></i>
                         </a> 
+                        {% else %}
+                        {% endif %}
                  
                     </div>
+                    <hr>
                     {% endfor %}
-     
+            
+
+                </div>
         
                 <!--Total-->
                 <div class="total">
-                    <div class="total-title">Total</div>
-                    <div class="total-price">{{order.cart_total}}</div>
+                    <div class="total-title" >Total</div>
+                    {% if user.is_authenticated %}
+                    <div class="total-price" id="total2">{{order.cart_total}}</div>
+                    {% else %}
+                    <div class="total-price" id="total2">{{order.get_cart_total}}</div>
+                    {% endif %}
                 </div>
                 <!--Buy Button-->
-                <button type="submit" class="btn-buy">Checkout</button>
+                <a href="{% url 'checkout' %}" style="text-decoration: none;">
+                    <button type="button" class="btn-buy">Checkout</button>
+                </a>
+                {% else %}
+                <img src="{% static 'images/nothing cart.png' %}" width="100" style="
+                margin-top:100px ;
+                align-items: center;
+                justify-content: center;
+                margin-left: 75px;
+                
+                ">
+                <h4 style="margin-left:35px; margin-top: 50px; ">Nothing in Here <a style="margin-left:35px;" href="{% url 'collection' %}">Shop Now</a></h4>
+                {% endif %}
                 <!-- CART -->
                 <i class="bx bx-x" id="close-cart"></i>
-            </div>
+         
+         
             </div>
         </div>
     </div>
 </div>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!--Cart function-->
 <script>
-    //cart
-    let cartIcon = document.querySelector('#cart-icon')
-    let cart = document.querySelector('.cart')
-    let closeCart = document.querySelector('#close-cart')
+    const cartIcon = document.querySelector('#cart-icon');
+    const carts = document.querySelector('.cart');
+    const closeCart = document.querySelector('#close-cart');
 
-    cartIcon.onclick = () => {
-        cart.classList.add('active');
-    };
-    closeCart.onclick = () => {
-        cart.classList.remove('active');
-    };
+    cartIcon.addEventListener('click',function(){
+        carts.classList.add('active')
+    })
+    closeCart.addEventListener('click',function(){
+        carts.classList.remove('active')
 
+    })
 </script>
 <script>
         /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-    function myFunction() {
+    function myFunctions() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
         x.className += " responsive";
@@ -944,14 +1248,17 @@
                 <p>09973664053</p>
             </div>
             <div class="right-footer">
-                <form class="searchbar" style="margin:auto; " >
-                    <input style="width: 200px ;" type="text" placeholder="Enter your Email" name="search">
-                    <button  type="submit" style="width:100px;">Subscribe</button>
+                <form class="searchbar" style="margin:auto; " method="POST" >
+                    {% csrf_token %}
+                    <input style="width: 200px ;" type="text" placeholder="Enter your Email" name="email">
+                    <button  type="submit" style="width:100px;" name="Send">Subscribe</button>
                   
                 </form>
                 <p>Be the first to know about our daily sales!</p>
                 <h5 style="color: rgb(243, 53, 53);">Follow Us</h5>
-                <i class='bx bxl-facebook-circle'></i>
+                <a href="https://www.facebook.com/WIFF-BAR-Philippines-official-102374295937538/" target="_blank">
+                    <i class='bx bxl-facebook-circle'></i>
+                </a>
             </div>
         </div>
     </div>
@@ -960,38 +1267,127 @@
     var updateBtns = document.getElementsByClassName('update-cart')
   
     for (i=0; i < updateBtns.length; i++){
-        updateBtns[i].addEventListener('click', function(){
-            var productId = this.dataset.product
-            var action = this.dataset.action
+        updateBtns[i].addEventListener('click', function(e){
+            let productId = e.target.dataset.product
+            let action = e.target.dataset.action
             console.log('productId:',productId,'Action:', action)
     
             console.log('USER:', user)
             if (user== 'AnonymousUser'){
-                console.log('Not Logged In')
+                addCookieItem(productId,action)
             }else{
                 updateUserOrder(productId, action)
             }
         })
     }
+    function addCookieItem(productId, action){
+        console.log('Not user login')
+        if (action == "add"){
+            if (cart[productId] == undefined){
+                cart[productId] = {'quantity':1}
+              
+               
+            }else{
+                cart[productId]['quantity'] += 1
+                
+                
+            }
+        }
+        if (action == "remove"){
+            cart[productId]['quantity'] -= 1
+            if (cart[productId]['quantity'] <= 0) {
+                console.log("remove item")
+                delete cart[productId]
+            
+            }
+        }
+        console.log("cart:",cart)
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        location.reload()
+
+    }
+
     function updateUserOrder(productId, action){
-        console.log('User is authenticated, sending data..')
-            var url  = '/update-item/'
+            console.log('User is authenticated, sending data..')
+            const data = {id:productId, action:action};
+
+        let url  = '/update-item/'
             fetch(url, {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
                     'X-CSRFToken': csrftoken,
                 },
-                body:JSON.stringify({'productId':productId, 'action' :action})
+                body:JSON.stringify(data),
             })
-            .then((response) => {
-                return response.json()
-            })
+            .then((response) => response.json())
             .then((data) => {
-                console.log('DATA:', data)
-                window.location.href = ""
+                console.log("success:",data);
+                location.reload()
+            })
+            .catch((error) => {
+                console.error('Error',error);
             });
+
+    }
+
+</script>
+
+
+<!-- synchronous add remove cart-->
+<script>
+    let inputfields = document.getElementsByTagName('input')
+    for (let i=0; i<inputfields.length; i++){
+        inputfields[i].addEventListener('change',updatequan)
+    }
+    function updatequan(e){
+        let inputval = e.target.value
+        let productid = e.target.dataset.product
+        const data = {p_id:productid, in_val:inputval};
+    let url = '/update-quantity/'
+        fetch (url, {
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':csrftoken
+            },
+            body: JSON.stringify(data),
+
+        })
+        .then ((response) => response.json())
+        .then(data =>{
+            console.log('Success:',data);
+            document.getElementById('total').innerHTML = `${data.total}`
+            document.getElementById('total2').innerHTML = `${data.total2}`
+            e.target.parentElement.parentElement.children[2].innerHTML = `&#8369;${data.subtotal}`
+            
+        })
+        .catch((error) => {
+            console.error('Error:',error);
+        });
     }
 </script>
+
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    
+	{% for msg in messages %}
+        alertify.set('notifier','position', 'top-center');
+		{% if msg.tags == "success"%}
+			alertify.success('{{msg}}')
+		{% elif msg.tags == "warning" %}
+			alertify.error('{{msg}}')
+		{% elif msg.tags == "error" %}
+			alertify.error('{{msg}}')
+		{% elif msg.tags == "info" %}
+			alertify.notify('{{msg}}')
+		{% endif %}
+		
+	
+
+   	{% endfor %}
+</script>
+
 </body>
 </html>

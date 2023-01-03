@@ -20,6 +20,13 @@
         flex: 50%;
         width: 100%;
         max-width: 100%;
+        transition: transform .4s
+    }
+    .item-right img:hover{
+        -ms-transform: scale(1.5); /* IE 9 */
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(1.1); 
+       
     }
     @media (max-width: 800px) {
     .flex-container {
@@ -43,26 +50,53 @@
 
     }
     }
-</style>
+    .btns {
+        box-sizing: border-box;
+        -webkit-appearance: none;
+            -moz-appearance: none;
+                appearance: none;
+        background-color: transparent;
+        border: 2px solid #e74c3c;
+        border-radius: 0.6em;
+        color: #e74c3c;
+        cursor: pointer;
+        display: flex;
+        align-self: center;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        margin: 20px;
+        padding: 1.2em 2.8em;
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        }
+        .btns:hover, .btns:focus {
+        color: #fff;
+        outline: 0;
+        }
 
+        .first {
+        transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+        }
+        .first:hover {
+        box-shadow: 0 0 40px 40px #e74c3c inset;
+        }
+   
+</style>
 <div class="">
     <div class="column-2">
-        <center>    
-            {% for msg in messages %}
-            <div class="alert alert-{{msg.tags}}" role="alert">
-               <b>{{msg}}</b>
-              </div>
-            {% endfor %}
-            <p style="margin-bottom: -20px ;">Home</p>
-        </center>
-        <img class="banner" src="{% static 'images/banner-new.png' %}" width="100%" height='auto' >
+   
+        <img class="banner" src="{% static 'images/prod/banner2.jpg' %}" width="100%" height='auto' >
     </div>
 </div>
 </div>
 <!--Categories-->
 <div class="flex-container">
     <div class="item-left">
-        <h1 style="font-size: 50px ; font-weight:550; ">NEW PRODUCTS </h1>
+        <h1 style="font-size: 50px ; font-weight:550; ">NEW FLAVORS </h1>
         <br>
         <h1 style="color: red; font-size: 50px ; font-weight:550;">NOW AVAILABLE!!</h1>
         {% for products in product %}
@@ -70,19 +104,33 @@
         <div class= "column-3">
             <a href="{% url 'add-to-cart' products.id %}"><img src="{{products.imageURL}}" alt="" ></a>
 
-            <a href="{% url 'add-to-cart' products.id %}" style="color: black; text-decoration: underline;" class="text-link">{{products.name_prod}}</a>
+            <a href="{% url 'add-to-cart' products.id %}" style="color: black; " class="text-link">{{products.name_prod}}</a>
 
             <div class="price">
                 <p><b>₱{{products.price}}</b></p>
                 <p style="text-decoration: line-through; color: gray;font-weight: 100; ">{{products.discount_price}}</p>
-                <a><button  class="update-cart" data-action="add" data-product="{{products.id}}" type="submit">ADD TO <br>CART</button></a>
+                
+                
+                <a><button  class="btns first update-cart" data-action="add" data-product="{{products.id}}" type="submit" id="cart-icon">ADD TO <br>CART</button></a>
             </div>
-      
+            
+            <script>
+                document.querySelectorAll('.button').forEach(button => button.addEventListener('click', e => {
+    if(!button.classList.contains('loading')) {
+
+        button.classList.add('loading');
+
+        setTimeout(() => button.classList.remove('loading'), 3700);
+
+    }
+    e.preventDefault();
+}));
+            </script>
        
         </div>
         {% endif %}
         {% endfor %}
-
+    
         
     </div>  
     <div class="item-right">
@@ -109,7 +157,7 @@
         <div class="shop-columns">
             <h2 style="font-size:30px ; text-align:center; color: black; font-weight: lighter; margin-top: 20px; padding-top: 20px; padding-left: 55px;  position: absolute;">Wiffbar Flavors</h2>
             <img src="{% static 'images/pngvape.png'%}" alt="">
-            <a href="{% url 'collection' %}"><p style="text-align: center; margin-top:-50px;">View More &#8594;</p></a>
+            <a href="{% url 'collection' %}" style="text-decoration:none ;"><p style="text-align: center; margin-top:-50px; color: red">View More &#8594;</p></a>
         </div>
     </div>
 
@@ -121,7 +169,9 @@
             <div class="column-2">
                 {% for prod in product %}
                 {% if prod.select == "exclusive" %}
-                <img src="{{prod.image.url}}" class="offer-img">
+                <a href="{% url 'add-to-cart' prod.id %}">
+                    <img src="{{prod.image.url}}" class="offer-img">
+                </a>
             </div>
             <div class="column-2">
                 <p>Exclusively Available on Wiffbar</p>
@@ -131,7 +181,13 @@
                 <small></small>
                 <br>
         
-                <a href="" class="button">Buy Now &#8594;</a>
+                <a href="" style="text-decoration:none ;"><button class="btns first update-cart" data-action="add" data-product="{{prod.id}}" id="cart-icon">Buy Now &#8594;</button></a>
+                <script>
+                    function myFunction(){
+                        alert("Add to Cart Succesfully!");
+                        window.location.reload(true);
+                    }
+                </script>
                 {% endif %}
                 {% endfor %}
             </div>
@@ -157,7 +213,7 @@
         {% endfor %}
     </div>
     <center>    
-        <a href="{% url 'collection' %}"><button type="submit" class="button">View More</button></a>
+        <a href="{% url 'collection' %}" style="text-decoration: none;"><button type="submit" class="btns first">View More</button></a>
     </center>
 </div>
 <div class="benefits">

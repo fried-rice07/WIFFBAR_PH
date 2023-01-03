@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content  %}
+
 <!--Product Details -->
 <style>
     .single-product {
@@ -63,7 +64,53 @@
         }
         
     }
+    .btns {
+        box-sizing: border-box;
+        -webkit-appearance: none;
+            -moz-appearance: none;
+                appearance: none;
+        background-color: transparent;
+        border: 2px solid #e74c3c;
+        border-radius: 0.6em;
+        color: #e74c3c;
+        cursor: pointer;
+        display: flex;
+        align-self: center;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        margin: 20px;
+        padding: 1.2em 2.8em;
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        }
+        .btns:hover, .btns:focus {
+        color: #fff;
+        outline: 0;
+        }
+
+        .first {
+        transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+        }
+        .first:hover {
+        box-shadow: 0 0 40px 40px #e74c3c inset;
+        }
+    .descript{
+        text-align: center;
+       
+        margin: 10px auto;
+    }
+    @media  (max-width:600px) {
+        .text-descript{
+            text-align: right;
+            display: block;
+        }
+    }
 </style>
+<hr>
 
 <div class="small-container single-product">
     <div class="rows">
@@ -83,30 +130,49 @@
                 <option> Large </option>
             </select>
             <input type="number" value="1"> -->
-            <button class="update-cart" data-action="add" data-product="{{prod.id}}">Add to Cart</button>
-            
-           </center>
-           <div class="descript">
-            <h3 style="margin-top: 20px;" ><b>DESCRIPTION</b></i> </h3>
-            <br>
-             <p><b>💥 Welcome to the Store</b><br><b>💥 100% ORIGINAL PRODUCT</b><br>-7000 disposable pod 16ml
-             <br>-550MAH Battery Capacity
-             <br>-No leakage
-             <br>-Rechargeable with Type C
-             <br>Sealed Package
-             <br>
-             <b>Please Kindly Note: </b><br>
-             If there is a problem with the product, please contact us first and don't leave a bad review, because we 
-             will replace a new one for you for free (after confirming that it is a product quality problem ) We highly
-             recommend to video a short clip of unboxing upon and opening and using the product so that incase of any defects,
-             we can verify your concern easily, No unboxing video. No Replacement.
-             </p>            
-           </div>
           
+            <button class="btns first update-cart" data-action="add" data-product="{{prod.id}}">Add to Cart</button>
+           
+           </center>
+         
         </div>
     </div >
 </div>
+<div class="descript">
+    <b>💥 Welcome to the Store</b>
+    <b>💥 100% ORIGINAL PRODUCT</b>
+    <div class="" >
+        -7000 disposable pod 16ml
+        <br>-550MAH Battery Capacity
+        <br>-No leakage
+        <br>-Rechargeable with Type C
+        <br>Sealed Package
+    </div>
+    <b >Please Kindly Note: </b><br>
+    <div class="text-descript" style="text-align: center; width: 50%; margin: 0 auto;">
+        <br>
+        If there is a problem with the product, please contact us first and don't leave a bad review, because we 
+        will replace a new one for you for free (after confirming that it is a product quality problem ) We highly
+        recommend to video a short clip of unboxing upon and opening and using the product so that incase of any defects,
+        we can verify your concern easily, No unboxing video. No Replacement.
+    </div>
+    <!-- <p><b>💥 Welcome to the Store</b><br><b>💥 100% ORIGINAL PRODUCT</b><br>
+        -7000 disposable pod 16ml
+     <br>-550MAH Battery Capacity
+     <br>-No leakage
+     <br>-Rechargeable with Type C
+     <br>Sealed Package
+     <br>
 
+    
+     <b>Please Kindly Note: </b><br>
+     If there is a problem with the product, please contact us first and don't leave a bad review, because we 
+     will replace a new one for you for free (after confirming that it is a product quality problem ) We highly
+     recommend to video a short clip of unboxing upon and opening and using the product so that incase of any defects,
+     we can verify your concern easily, No unboxing video. No Replacement.
+     </p>             -->
+</div>
+  
 <style>
     .small-container h1 {
         margin-top: 20px;
@@ -182,21 +248,20 @@
     <div class="rows">
         <div class="small-container" style="margin-top:10px; width: 100%; ">
             <h1>Customer Review</h1>
-            <form class="cf">
+            <form class="cf" method="POST">
+            {% csrf_token %}    
+            {% if request.user.is_authenticated %}            
             <div class="half left cf">
-                <input type="text" id="input-name" placeholder="Email Address">
+                <input type="text" id="input-name" name="rating" placeholder="Type your Rate 1-5">
             </div>
             <div class="half right cf">
-                <textarea name="message" type="text" id="input-message" placeholder="Message"></textarea>
+                <textarea name="message" type="text" id="input-message" placeholder="Message" required></textarea>
             </div>  
             <input type="submit" value="Submit" id="input-submit">
-            <p style=" word-wrap: break-word; text-align: left; margin-top: 20px;">
-                <img src="{% static 'images/product1.jpg'%}" width="60px" style="border-radius:50% ;  float: left; margin: 0 15px 0 0 ;">
-                <b style="float: left;">admin</b>
-                <span style="margin-left:14px ; color: gray; font-size: 14px;"> 01/10/10</span>
-                <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati corrupti vitae cupiditate? Rerum, ea in et nostrum incidunt velit minima tenetur voluptatum architecto porro harum iusto cumque saepe nam recusandae.
-            </p>
+            {% else %}
+            <p style="color:black ;">Before you take a review you need to <a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+         
            
             
             </form>
@@ -223,15 +288,23 @@
 <div class="products">
     <h2 >You May Also Like</h2>
     <div class="rows">
+        {% for products in product_all %}
+        {% if products.select == 'display' %}
         <div class="column-10">
-            <img src="{% static 'images/product1.jpg' %}" alt="">
-            <h5>WIFFBAR Menthol Plus</h5>
+            <a href="{% url 'add-to-cart' products.id %}">
+                <img src="{{products.imageURL}}" alt="">
+            </a>
+            <a href="{% url 'add-to-cart' products.id %}" style="color: black;">
+                <h5>{{products.name_prod}}</h5>
+            </a>
             <center>
-                <span><strong>P 250.00</strong></span>
-                <span style="text-decoration:line-through;">p 250.00</span>
+                <span><strong>₱{{products.price}}</strong></span>
+                <span style="text-decoration:line-through;">₱{{products.discount_price}}</span>
             </center>
         </div>
-        <div class="column-10">
+        {% endif %}
+        {% endfor %}
+        <!-- <div class="column-10">
             <img src="{% static 'images/product 2.jpg' %}" alt="">
             <h5>WIFFBAR Watermelon Iced</h5>
             <center>
@@ -262,11 +335,11 @@
                 <span><strong>P 250.00</strong></span>
                 <span style="text-decoration:line-through;">p 250.00</span>
             </center>
-        </div>
+        </div> -->
 
     </div>
     <center>    
-        <a href="{% url 'collection' %}"><button type="submit" class="button">View More</button></a>
+        <a href="{% url 'collection' %}" style="text-decoration: none ;"><button type="submit" class="btns first">View More</button></a>
     </center>
 </div>
 <div class="" style="margin-bottom: 200px;"></div>

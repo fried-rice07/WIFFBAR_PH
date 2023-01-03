@@ -16,10 +16,14 @@ urlpatterns = [
     path('password_change', views.password_change, name="password_change"),
     path('profile/', views.profile, name="profile"),
     path('edit-profile/<int:pk>/', views.edit_profile, name="edit-profile"),
-
     path('delete-product<int:pk>/',views.delete_product, name="delete-product"),
-
     #add to cart 
     path('update-item/',views.updateItem, name="update-item"),
+    path('update-quantity/',views.updateQuantity, name='update-quantity'),
+    # path('delete-cart/<int:pk>/',views.deletecart, name='delete-cart'),
+    #search
+    path('search-product/',views.search, name='search-product'),
+    #cart
+    path('cart/',views.cart, name="cart"),
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

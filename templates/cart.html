@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* cart items */
+    .cart-page {
+        margin:50px auto;
+        padding: 40px auto;
+
+    }
+
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .cart-info {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+    th {
+        text-align: left;
+        padding: 5px;
+        color: #ffff;
+        background: #e74c3c;
+        font-weight: normal;
+        font-size: 20px;
+    }
+    td {
+        padding: 10px 1px;
+
+    }
+    td input {
+        width: 40px;
+        height: 30px;
+        padding: 5px;
+    }
+    td a {
+        color: red;
+        font-size: 12px;
+    }
+    td img {
+        width: 80px;
+        height: 80px;
+        margin-right: 10px;
+    }
+    .total-price {
+        display: flex;
+        justify-content: flex-end;
+
+    }
+    .total-price table{
+        border: 1px solid #e74c3c;
+        width: 100%;
+        max-width: 400px;
+    }
+    td:last-child{
+        text-align: right;
+    }
+    th:last-child{
+        text-align: right;
+    }
+    @media only screen and (max-width:600px) {
+        .cart-info p{
+            display: none;
+        }
+        .cart-page {
+            margin-left: -15px;
+        }
+
+    }
+    .btns {
+        box-sizing: border-box;
+        -webkit-appearance: none;
+            -moz-appearance: none;
+                appearance: none;
+        background-color: transparent;
+        border: 2px solid #e74c3c;
+        border-radius: 0.6em;
+        background-color: #e74c3c;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-self: center;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        margin: 20px;
+        padding: 1.2em 2.8em;
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        }
+        .bxs-up-arrow {
+            position: relative;
+            width: 100%;
+        }
+        td input {
+            margin-top: -30px;
+            margin-left: 20px;
+        }
+        @media (max-width:600px) {
+            .box {
+                position: absolute;
+                top: 55%;
+                left: 110px;
+            }
+        }
+</style>
+<div class="small-container cart-page">
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        
+        {% for items in item %}
+        <tr>
+       
+            <td>
+                <div class="cart-info">
+                    <img src="{{items.product.imageURL}}" alt="" width="400">
+                    <div>
+              
+                        <p>{{items.product.name_prod}}</p>
+                        <small style="color:black ;">price: {{items.product.price}}</small>
+
+
+                        <br>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'delete-product' items.id %}">remove</a>
+                        {% else %}
+                        {% endif %}
+                      
+                    </div>
+                    </div>
+                </div>
+
+            </td>
+            <td>
+               
+                {% if user.is_authenticated%}
+                <input type="number" id="num_quantity" min="1" max="999" oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"  value="{{items.quantity}}" data-product="{{items.product.id}}" >
+                {% else %}
+                <div class="box">
+                    <div class="quantity">
+                      <span class="quantity-add quantity-button plus update-cart" data-product="{{items.product.id}}" style="cursor: pointer; left: -50px;" data-action="add"></span>
+                        <input type="number" step="1" min="1" value="{{items.quantity}}" style="position:absolute; top: 76%; left: -110px;">
+                        <span class="quantity-remove quantity-button minus update-cart" style="cursor: pointer; position: absolute; left: -130px;" data-action="remove" data-product="{{items.product.id}}"></span>
+                    </div>
+                  </div>
+                <!-- <span data-product="{{items.product.id}}" class="minus update-cart" style="cursor: pointer;" data-action="remove"  >-</span>
+                <span class="num">{{items.quantity}}</span>
+                <span data-product="{{items.product.id}}" class="plus update-cart" style="cursor: pointer;" data-action="add">+</span> -->
+                {% endif %}
+             
+
+            </td>
+            <td>{{items.total}}</td>
+
+        </tr>
+
+        {% endfor %}
+ 
+    </table>
+    <div class="total-price">
+    
+        <table>
+            <tr>
+                <td>Shipping:</td>
+                <td>Calculate Later</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                {% if request.user.is_authenticated %}
+                <td id="total2">{{order.cart_total}}</td>
+                {% else %}
+                <td id="total2">{{order.get_cart_total}}</td>
+                {% endif %}
+            </tr>   
+            
+        </table>
+      
+    </div>
+    <div class="total-price">
+        <button style="display: flex; " class="btns first">Checkout</button>
+    </div>
+
+</div> 
+<!-- synchronous add remove cart-->
+
+{% endblock content %}

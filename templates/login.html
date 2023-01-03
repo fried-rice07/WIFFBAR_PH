@@ -1,12 +1,14 @@
-{% extends 'base.html' %}
-{% block content %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta lang="en" /><link rel="canonical"  />
-
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 <link href='//ueeshop.ly200-cdn.com/static/v0/ueeshop/v5.0381/themes/t161/css/font.css' rel='stylesheet' type='text/css' rel="preload" as="style" />
 <link href='//ueeshop.ly200-cdn.com/static/v0/ueeshop/v5.0381/css/global.css' rel='stylesheet' type='text/css'  />
 <link href='//ueeshop.ly200-cdn.com/static/v0/ueeshop/v5.0381/static/font/global/iconfont.css' rel='stylesheet' type='text/css'  />
@@ -24,82 +26,12 @@
 
 
 
-#newsletter_form input{ border-color: var(--ThemesFooterInputBorderColor); color: var(--ThemesFooterInputColor); }
-#newsletter_form input::-webkit-input-placeholder{ color: var(--ThemesFooterInputColor); }
-#newsletter_form input:-moz-placeholder{ color: var(--ThemesFooterInputColor); }
-#newsletter_form input::-moz-placeholder{ color: var(--ThemesFooterInputColor); }
-#newsletter_form input:-ms-input-placeholder{ color: var(--ThemesFooterInputColor); }
-
-#header {background-color: var(--ThemesHeaderBgColor);}
-.default_language_currency_style,
-.default_shopping_cart_style span {color: var(--ThemesHeaderTextColor);}
-
-.default_search_style .iconfont {color: var(--ThemesHeaderIconSearchColor);}
-.default_account_style .iconfont,
-.default_shopping_cart_style .iconfont,
-.ly_moblie_menu .iconfont,
-.ly_moblie_search .iconfont {color: var(--ThemesHeaderIconColor);}
-
-.ly_hm_right .ly_line {background-color: var(--ThemesHeaderLineColor);}
-
-.default_nav_style li a{color: var(--ThemesNavTextColor);}
-.default_nav_style li a:hover {color: var(--ThemesNavTextHoverColor);}
-
-#footer {background-color: var(--ThemesFooterBgColor);}
-.default_foot_menu_style .menu_list dt,
-.newsletter_title,
-.ly_ft_fu .ly_ft_fu_title {color: var(--ThemesFooterTitleColor);}
-.default_foot_menu_style .menu_list dt .iconfont {color:var(--ThemesFooterTitleColor);}
-.default_foot_menu_style .menu_list dd a,
-.ly_ft_content {color:var(--ThemesFooterTextColor);}
-.follow_us_list .iconfont {color: var(--ThemesFooterIconColor);}
-.ly_ft_text {color: var(--ThemesFooterTextColor);}
-
-.ly_shop_btn {background-color: #FFF;}
-
-.ly_product_second .view,.ly_product_first .view{ background-color: #000; color: #fff; font-family: "OpenSans-bold";border: solid 2px #000; }
-
-.ly_sale_btn {background-color: #000;}
-.ly_sale_btn a {color: #FFF;}
-
-.ly_cate_item .ly_ci_title{ font-family: "OpenSans-bold"; }
-
-.ly_cate_item .ly_ci_img:before,
-.ly_cf_item .mask:before,
-.ly_cs_item .mask:before ,.ly_ct_item .mask:before{background-color: #FFF;}
-.ly_csi_text .view{ background-color: #fff; color: #222222; font-family: "OpenSans-bold"; }
-
-.ly_product_item .ly_product_img .ly_sale {background-color: #fe5859;color: #FFF;}
-.ly_product_item .ly_product_img .ly_quick_view {background-color: #fff;font-family: "OpenSans-Blod";color: #000;-webkit-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.12);box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.12);}
-
-.ly_sm_item a::before {background-color: #000;}
-
-.ly_cf_item .ly_cfi_text .ly_cfi_title ,
-.ly_cf_item .ly_cfi_text .ly_cfi_subTitle,
-.ly_cs_item .ly_csi_text .ly_csi_title,
-.ly_csi_text .ly_csi_subTitle,
-.ly_ct_item .ly_cti_text .ly_cti_title,
-.ly_cti_text .ly_cti_subTitle {font-family: "GothamBlack-Regular";color: #FFF;}
-.ly_ct_item:last-child .ly_cti_text .ly_cti_title,
-.ly_ct_item:last-child .ly_cti_text .ly_cti_subTitle {color: #9e4a21;}
-
-.ly_csi_text .ly_shop_all {background-color: #fff;color: #000;font-family: "OpenSans-Regular";}
-
-/* style */
-#header {-webkit-box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.12);box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.12);}
-.default_search_style .default_search_form {background-color: var(--ThemesHeaderInputBgColor);}
-.default_search_style .default_search_form .text {background-color: transparent;}
-.default_search_style .default_search_form .button {background-color: var(--ThemesHeaderIconSearchBgColor);}
-
-#newsletter_form {border-color: var(--ThemesFooterInputBorderColor);}
-#newsletter_form .subscribe {background-color: var(--ThemesFooterButtonBgColor);color: var(--ThemesFooterButtonColor);}
-/* style-end */
 
 .clean {
 	margin-top: -30px;
 }
 .title {
-	margin-top: -70px;
+	margin-top: 20px;
 }
 
 .ly_cf_item a:before,.ly_ct_item a:before{background-color: #fff;}
@@ -115,20 +47,29 @@
 @media screen and (min-width:1000px) {
 	.ly_product_second .view:hover,.ly_product_first .view:hover{background-color:transparent;color:#000;}
 }
+.info{
+	margin-top: 20px;
+}
 </style>
 </head>
-
+<style>
+	.icon {
+		display: flex;
+		margin:40px auto;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		width: 50%;
+	}
+</style>
 <body>
-
+	{% load static %}
+	<div class="icon"><a href="{% url 'home' %}"><img src="{% static 'images/vapelogo.png' %}" alt="" width="250"></a></div>
 <div id="customer" class="clean">
     <div id="signup" class="fl">
 		<div class="top_tab">
 	<h3 class="title">Log in</h3>
-	{% for msg in messages %}
-	<div class="alert alert-{{msg.tags}}" role="alert">
-	   <b>{{msg}}</b>
-	  </div>
-	{% endfor %}
+
     <p style="font-size:15px; margin-bottom:10px; color:gray;">Access your account & orders history</p>
 </div>
 <div class="content clean">
@@ -181,4 +122,23 @@
 
 </div>
 </body>
-{% endblock content %}
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    
+	{% for msg in messages %}
+        alertify.set('notifier','position', 'top-center');
+		{% if msg.tags == "success"%}
+			alertify.success('{{msg}}')
+		{% elif msg.tags == "warning" %}
+			alertify.error('{{msg}}')
+		{% elif msg.tags == "error" %}
+			alertify.error('{{msg}}')
+		{% elif msg.tags == "info" %}
+			alertify.notify('{{msg}}')
+		{% endif %}
+		
+	
+
+   	{% endfor %}
+</script>

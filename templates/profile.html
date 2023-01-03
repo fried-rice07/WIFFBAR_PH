@@ -1,17 +1,19 @@
 {% extends 'base.html'%}
 {% block content %}
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <section style="background-color: #eee;">
 
 
     <div class="row">
+
       <div class="col-lg-4">
+
         <div class="card mb-4">
+          <a href="{% url 'home' %}" style="color:black;"><i style="font-size: 15px; padding: 10px; text-decoration: underline;" class="fa-sharp fa-solid fa-arrow-left"> Go back</i></a>
           <div class="card-body text-center">
-            {% for msg in messages %}
-            <div class="alert alert-{{msg.tags}}" role="alert">
-               <b>{{msg}}</b>
-              </div>
-            {% endfor %}
+
+
             {% if request.user.photo %}
             <img src="{{request.user.photo.url}}" alt="avatar"
               class="rounded-circle img-fluid" style="width: 200px;">
@@ -141,7 +143,6 @@
                 <p class="mt-4 mb-1" style="font-size: 1rem;">Date & Time</p>
 
                 {% for items in item %}
-   
                 <center>{{items.date_added}}</center>
                 <div  style="height: 2px; background-color: red; ">
                   <hr>

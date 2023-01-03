@@ -1,3 +1,5 @@
+from itertools import product
+from multiprocessing.sharedctypes import Value
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from .models import User
@@ -10,44 +12,77 @@ import datetime
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, View
+from django.utils.datastructures import MultiValueDictKeyError
+from .utils import cookieCart
+from django.core.mail import send_mail, EmailMessage
 # Create your views here.
 def base(request):
+    product = Product.objects.all()
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        cartItems = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
+
     context = {
         'item':item,
         'cartItems':cartItems,
         'order':order,
+        'product':product,
     }
     return render(request,'base.html', context)
+
+def search(request):
+    if request.method == "GET":
+        searched = request.GET.get('searched')
+        product = Product.objects.all().filter(name_prod__icontains=searched)
+
+    
+        return render(request,'search_product.html',{'product':product})
+
+
+
 def home(request):
     if request.user.is_authenticated:
+        
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
+        
     else:
-        order = None
-        item = None
-        cartItems = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
     product = Product.objects.all()
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,f' Welcome {username}')
-            return redirect('home')
-        else:
-            messages.info(request, 'Credentials Not Valid')
-            return redirect(request.META['HTTP_REFERER'])
+    if 'Send' in request.POST:
+        if request.method == "POST":
+            email = request.POST['email']
+            send_mail(
+                'WIFFBAR PH',
+                'Thanks for subscribing!',
+                'settings.EMAIL_HOST_USER',
+                [email], fail_silently=False
+            )
+    elif 'login' in request.POST:
+
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,f' Welcome {username}')
+                return redirect('home')
+            else:
+                messages.info(request, 'Credentials Not Valid')
+                return redirect(request.META['HTTP_REFERER'])
     context = {
         'product':product,
         'item':item,
@@ -57,30 +92,49 @@ def home(request):
     return render(request, 'home.html',context)
 
 def collection(request):
+    try:
+        customer_review = CustomerReview.objects.all()
+    except CustomerReview.DoesNotExist:
+        customer_review = ""
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        order = None
-        cartItems = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
     product = Product.objects.all()
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,f' Welcome {username}')
-            return redirect('home')
-        else:
-            messages.error(request, 'Credentials Not Valid')
+    
+    if 'Send' in request.POST:
+            if request.method == "POST":
+                email = request.POST['email']
+                send_mail(
+                    'WIFFBAR PH',
+                    'Thanks for subscribing!',
+                    'settings.EMAIL_HOST_USER',
+                    [email], fail_silently=False
+                )
+    elif 'login' in request.POST:
+
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,f' Welcome {username}')
+                return redirect('home')
+            else:
+                messages.info(request, 'Credentials Not Valid')
+                return redirect(request.META['HTTP_REFERER'])
     context = {
         'product':product,
         'order':order,
         'item':item,
+        'customer_review':customer_review,
 
     }
     return render(request, 'collections.html', context)
@@ -126,7 +180,7 @@ def login_user(request):
             messages.success(request,f' Welcome {username}')
             return redirect('home')
         else:
-            messages.error(request, 'Credentials Not Valid')
+            messages.error(request, 'Credentials Not Valid')    
 
     return render(request, 'login.html',)
 def log_out(request):
@@ -140,61 +194,103 @@ class ItemDetailView(DetailView):
     model = Product
     template_name = 'product-page.html'
 def add_to_cart(request,pk):
+    user_customer = request.user
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        cartItems = None
-        order = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            prod = str(Product.objects.get(id=pk))
+            user = request.user
+            rating = request.POST['rating']
+            message = request.POST['message']
+            now = datetime.datetime.now()
+            date = now.time()
+            customer_review = CustomerReview.objects.create(rating=rating, message=message, user=user, prod=prod, date=date)
+            customer_review.save()
+            messages.success(request,'Thanks for rating!')
+            return redirect(request.META['HTTP_REFERER'])
+        else:
+            rating = None
+
+    
     product = Product.objects.filter(select="display")
     prod = Product.objects.get(id=pk)
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,f' Welcome {username}')
-            return redirect('home')
-        else:
-            messages.error(request, 'Credentials Not Valid')
+    product_all = Product.objects.all()
+    try:
+        customer_review = CustomerReview.objects.all()
+    except CustomerReview.DoesNotExist:
+        customer_review = ""
+    if 'Send' in request.POST:
+        if request.method == "POST":
+            email = request.POST['email']
+            send_mail(
+                'WIFFBAR PH',
+                'Thanks for subscribing!',
+                'settings.EMAIL_HOST_USER',
+                [email], fail_silently=False
+            )
+    elif 'login' in request.POST:
+
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,f' Welcome {username}')
+                return redirect('home')
+            else:
+                messages.info(request, 'Credentials Not Valid')
+                return redirect(request.META['HTTP_REFERER'])
+  
     context = {
         'prod':prod,
         'product':product,
         'item':item,
         'cartItems':cartItems,
         'order':order,
+        'user':user_customer,
+        'customer_review':customer_review,
+        'product_all':product_all,
     }
     return render(request,'add_to_cart.html', context)
 def updateItem(request):
     #force the data into template
     data = json.loads(request.body)
-    productId = data ['productId']
+    productId = data['id']
     action  = data['action']
     print('Action:', action)
     print('Product:', productId)
+    if request.user.is_authenticated:
+        customer = request.user
+        product = Product.objects.get(id=productId)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        if action == "add":
+            orderItem.quantity += 1
+            messages.add_message(request,messages.SUCCESS,'ADD ITEM SUCCESSFUL', fail_silently=True)
+        orderItem.save()
 
-    customer = request.user
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-    
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-    
-    orderItem.save()
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-    return JsonResponse('Item was added', safe=False)
+
+    msg = {
+        'quantity':order.cart_total,
+    }   
+        
+
+    return JsonResponse(msg, safe=False)
+
 def delete_product(request,pk):
     product = OrderItem.objects.get(id=pk)
     product.delete()
-    return redirect('home')
+    return redirect(request.META['HTTP_REFERER'])
 
 def checkout(request):
     if request.user.is_authenticated:
@@ -203,19 +299,32 @@ def checkout(request):
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        order = None
-        cartItems = None
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,f' Welcome {username}')
-            return redirect('home')
-        else:
-            messages.error(request, 'Credentials Not Valid')
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
+    if 'Send' in request.POST:
+        if request.method == "POST":
+            email = request.POST['email']
+            send_mail(
+                'WIFFBAR PH',
+                'Thanks for subscribing!',
+                'settings.EMAIL_HOST_USER',
+                [email], fail_silently=False
+            )
+    elif 'login' in request.POST:
+
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,f' Welcome {username}')
+                return redirect('home')
+            else:
+                messages.info(request, 'Credentials Not Valid')
+                return redirect(request.META['HTTP_REFERER'])
 
     context = {
         "order":order,
@@ -244,9 +353,10 @@ def profile(request):
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        order = None
-        cartItems = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
 
     context = {
         'order':order,
@@ -261,9 +371,10 @@ def edit_profile(request, pk):
         item = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
-        item = None
-        order = None
-        cartItems = None
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
     user_id = User.objects.get(id=pk)
     user = UserForm(request.POST or None, request.FILES or None,instance=user_id)
     if user.is_valid():
@@ -276,3 +387,72 @@ def edit_profile(request, pk):
         'item':item,
     }
     return render(request,'edit_profile.html', context)
+
+
+from django.core.exceptions import MultipleObjectsReturned
+
+def cart(request):
+    product = Product.objects.all()
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        item = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        cookieData = cookieCart(request)
+        cartItems  = cookieData['cartItems']
+        order = cookieData['order']
+        item = cookieData['item']
+    if 'Send' in request.POST:
+        if request.method == "POST":
+            email = request.POST['email']
+            send_mail(
+                'WIFFBAR PH',
+                'Thanks for subscribing!',
+                'settings.EMAIL_HOST_USER',
+                [email], fail_silently=False
+            )
+    elif 'login' in request.POST:
+
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request,f' Welcome {username}')
+                return redirect('home')
+            else:
+                messages.info(request, 'Credentials Not Valid')
+                return redirect(request.META['HTTP_REFERER'])
+    context = {
+        'item':item,
+        'cartItems':cartItems,
+        'order':order,
+        'product':product,
+    }
+    return render(request,'cart.html',context)
+
+def updateQuantity(request):
+    data = json.loads(request.body)
+    inputval = int(data['in_val'])
+    product_id = data['p_id']
+    if request.user.is_authenticated:
+        customer = request.user
+        product = Product.objects.get(id=product_id)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        orderItem.quantity = inputval
+        orderItem.save()
+
+        msg = {
+            'total': order.cart_total,
+            'subtotal':orderItem.total,
+            'total2': order.cart_total,
+
+        }
+    return JsonResponse(msg,safe=False)
+
+def deletecart(request):
+
+    return JsonResponse(safe=False)

@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
-<!--featured products-->
+{% if not product %}
+    <center>No Result Found!</center>
+{% else %}
 <div class="small-container">
     <h2 class="title">All Collections</h2>
     <div class="rows">
         {% for prod in product %}
         <div class="column-4">
+        
             <a href="{% url 'add-to-cart' prod.id %}"><img src="{{prod.image.url}}" alt=""></a>
-            <p class="description">{{prod.name_prod}}</p>
+            <p class="description">{{prod.name_prod}}</p>      
             <span><b>₱{{prod.price}}</b></span>
             <span style="text-decoration:line-through;">₱{{prod.discount_price}}</span>
+       
         </div>
         {% endfor %}
         
@@ -18,5 +21,5 @@
     </div>
 
 </div>
-
+{% endif %}
 {% endblock content %}
