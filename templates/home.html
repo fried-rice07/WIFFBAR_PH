@@ -181,7 +181,7 @@
                 <small></small>
                 <br>
         
-                <a href="" style="text-decoration:none ;"><button class="btns first update-cart" data-action="add" data-product="{{prod.id}}" id="cart-icon">Buy Now &#8594;</button></a>
+                <a href="{% url 'cart' %}" style="text-decoration:none ;"><button class="btns first update-cart" data-action="add" data-product="{{prod.id}}" id="cart-icon">Buy Now &#8594;</button></a>
                 <script>
                     function myFunction(){
                         alert("Add to Cart Succesfully!");
