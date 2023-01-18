@@ -533,7 +533,44 @@
     height: 50px;
 	border-radius: 100%;
 	}
+    @media only screen and (max-width:300px) and (min-width:200px) {
+        body,html{
+            width: 113%;
+        }
+        .shop-text {
+            display: none;
+        }
+        .offer{
+            width: 100%;
+        }
+        
+    }
+    @media only screen and (max-width:200px) and (min-width:150px) {
+        body,html{
+            width: 123%;
+        }
+        .shop-text {
+            display: none;
+        }
+        .offer{
+            width: 100%;
+        }
 
+        
+    }
+    @media (max-width:222px){
+        body,html{
+            width: 110%;
+        }
+        .shop-text {
+            display: none;
+        }
+        .offer{
+            width: 100%;
+        }
+
+        
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -1070,7 +1107,7 @@
                     {% for items in item %}
                    
                     <div class="cart-box">
-                        <a href="{% url 'cart' %}"><img src="{{items.product.imageURL}}" alt="" class="cart-img" ></a>
+                       <img src="{{items.product.imageURL}}" alt="" class="cart-img" >
     
                         <div class="detail-box">
                         
