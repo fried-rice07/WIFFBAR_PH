@@ -1,10 +1,4 @@
 
-from email.policy import default
-from enum import unique
-from math import prod
-from random import choices
-from tkinter import N
-from tokenize import blank_re
 import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
